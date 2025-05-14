@@ -1,26 +1,46 @@
 using UnityEngine;
 
 /// <summary>
-/// Abstract base class that hides low?level movement / audio logic
-/// from callers (ABSTRACTION) and protects data via properties
-/// (ENCAPSULATION will be fleshed out later).
+/// Base class now shows both ABSTRACTION *and* ENCAPSULATION.
+/// All state is private; access happens only through validated
+/// properties or dedicated methods.
 /// </summary>
 public abstract class Animal : MonoBehaviour
 {
-    // ——— Encapsulated field (we’ll expose it with a property later) ———
-    [SerializeField] private float speed = 3f;
-
-    /// <summary>
-    /// Gets the current movement speed in units/second.
-    /// Setter is protected so only child classes can change it.
-    /// </summary>
+    // ???????????????????? Movement ????????????????????
+    [SerializeField] private float speed = 3f;          // <?? private!
+    /// <summary>Units/second. Setter is validated & protected.</summary>
     public float Speed
     {
         get => speed;
-        protected set => speed = Mathf.Max(0, value);
+        protected set => speed = Mathf.Clamp(value, 0f, 10f);
     }
 
-    // ——— High?level behaviours (ABSTRACTION) ———
-    public abstract void Move();      // to be overridden by each species
-    public abstract void MakeSound(); // same here
+    // ???????????????????? Health ???????????????????????
+    [SerializeField] private int maxHealth = 100;
+    private int currentHealth;
+    public int CurrentHealth          // read?only from outside
+    {
+        get => currentHealth;
+        private set => currentHealth = Mathf.Clamp(value, 0, maxHealth);
+    }
+
+    /// <summary>Apply damage; health never drops below?0.</summary>
+    public void ApplyDamage(int amount) => CurrentHealth -= amount;
+
+    // ???????????????????? Audio ????????????????????????
+    [SerializeField] private AudioClip callClip;
+    /// <summary>Audio clip for this animal’s call.</summary>
+    public AudioClip CallClip
+    {
+        get => callClip;
+        protected set => callClip = value;
+    }
+
+    // ???????????????????? Unity lifecycle ??????????????
+    protected virtual void Awake() => CurrentHealth = maxHealth;
+
+    // ???????????????????? High?level API (Abstraction) ?
+    public abstract void Move();
+    public abstract void MakeSound();
 }
