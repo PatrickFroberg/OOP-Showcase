@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598e7bc09035a1242b1ff8e31b1a74f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 6
   maxHealth: 100
   callClip: {fileID: 0}
   turnRate: 45

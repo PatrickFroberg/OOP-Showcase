@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Lion : Animal
 {
-    [SerializeField] private float turnRate = 45f;   // degrees/second
+    [SerializeField] private float turnRate = 45f; // degrees/second
 
     public override void Move()
     {
@@ -13,7 +13,6 @@ public class Lion : Animal
 
     public override void MakeSound()
     {
-        // Lion’s roar
-        SoundHelper.Play("Roar");   // overload that takes a clip?name string
+        SoundHelper.Play("Roar");
     }
 }

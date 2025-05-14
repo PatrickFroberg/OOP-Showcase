@@ -9,7 +9,9 @@ public class Eagle : Animal
         // Circle in the sky at a fixed altitude
         float radius = 4f;
         float angle = Time.time * Speed;
+
         Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+        
         transform.position = new Vector3(pos.x, altitude, pos.z);
         transform.LookAt(Vector3.zero + Vector3.up * altitude);
     }
